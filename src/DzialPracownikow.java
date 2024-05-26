@@ -47,11 +47,8 @@ public class DzialPracownikow {
     // GETTERS
     public static Map<Integer, DzialPracownikow> getListaDzialow() { return mapaDzialow; }
 
-    public String getPracownicyDzialu() {
-        if(pracownicyDzialu.isEmpty())
-            return "[" + AbstractMessages.gray("BRAK") + "]";
-        else
-            return pracownicyDzialu.toString();
+    public Set<Pracownik> getPracownicyDzialu() {
+            return pracownicyDzialu;
     }
 }
 
