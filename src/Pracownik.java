@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Pracownik {
     private static Map<Integer, Pracownik> mapaPracownikow = new HashMap<>();
-    private int numerPracownika;
+    private final int numerPracownika;
     private static int iloscPracownikow = 0;
 
     protected String imie, nazwisko;
@@ -20,6 +20,7 @@ public class Pracownik {
         this.dataUrodzenia = LocalDate.parse(dataUrodzenia, formatter);
         this.przypisanyDzial = przypisanyDzial;
         this.przypisanyDzial.dodajPracownika(this);
+        mapaPracownikow.put(numerPracownika, this);
     }
 
     public Pracownik(String imie, String nazwisko, String dataUrodzenia, int numerPrzypisanegoDzialu) {

@@ -3,7 +3,7 @@ import java.util.Map;
 
 public class Uzytkownik extends Pracownik {
     private static Map<Integer, Uzytkownik> mapaUzytkownikow = new HashMap<>();
-    private int numerUzytkownika;
+    private final int numerUzytkownika;
     private static int iloscUzytkownikow;
 
     protected String login, haslo;

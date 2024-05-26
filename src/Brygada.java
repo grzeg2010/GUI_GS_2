@@ -13,6 +13,7 @@ public class Brygada {
         this.numerBrygady = ++iloscBrygad;
         this.nazwa = nazwa;
         this.listaPracownikow = new ArrayList<>();
+        mapaBrygad.put(numerBrygady, this);
     }
 
     public Brygada(String nazwa, Brygadzista brygadzista) {
@@ -45,8 +46,12 @@ public class Brygada {
             else
                 this.listaPracownikow.add(nowyPracownik);
         }
-        else
-            System.out.println(AbstractMessages.warning("[UWAGA!]") + " Nie mozna bylo dodac uzytkownika " + AbstractMessages.gray(nowyPracownik.toString()));
+        else {
+            System.out.println(AbstractMessages.warning("[UWAGA!]") +
+                    " Nie mozna bylo dodac uzytkownika " + AbstractMessages.gray(nowyPracownik.toString()) +
+                    ". Zły rodzaj klasy."
+            );
+        }
     }
 
     public void dodajPracownika(List<Pracownik> pracownicy) {

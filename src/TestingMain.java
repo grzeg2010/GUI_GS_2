@@ -37,5 +37,25 @@ public class TestingMain {
         brygada1.dodajPracownika(dzial1.getPracownicyDzialu());
 
         System.out.println(brygada1 + ": " + brygada1.getListaPracownikow());
+
+        // -------------------------------------------------------------------------------------------------------------
+        System.out.println(AbstractMessages.divider("TEST ZLECEN"));
+
+        Zlecenie zlecenie1 = new Zlecenie(brygada1, true);
+        Zlecenie zlecenie2 = new Zlecenie(brygada1, false);
+
+        System.out.println(zlecenie1);
+        System.out.println(zlecenie2);
+
+        System.out.println(zlecenie1.toStringLong());
+
+        // -------------------------------------------------------------------------------------------------------------
+        System.out.println(AbstractMessages.divider("TEST PRAC"));
+
+        Praca praca1 = new Praca(Praca.Rodzaj.Ogolna, 15, "Praca testowa");
+        zlecenie1.dodajPrace(praca1);
+
+        System.out.println(praca1.toStringLong());
+        System.out.println(zlecenie1.toStringLong());
     }
 }
