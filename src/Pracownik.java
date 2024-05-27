@@ -35,6 +35,14 @@ public class Pracownik {
                 "Dzial: " + przypisanyDzial;
     }
 
+    public void zmienNazwe(String noweImie, String noweNazwisko) {
+        this.imie = noweImie;
+        this.nazwisko = noweNazwisko;
+    }
+
+    public void zmienImie(String noweImie) { this.imie = noweImie; }
+    public void zmienNazwisko(String noweNazwisko) { this.imie = noweNazwisko; }
+
     // OVERRIDES
     @Override
     public String toString() {

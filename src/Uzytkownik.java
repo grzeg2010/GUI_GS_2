@@ -6,7 +6,7 @@ public class Uzytkownik extends Pracownik {
     private final int numerUzytkownika;
     private static int iloscUzytkownikow;
 
-    protected String login, haslo;
+    protected String login, haslo, inicjal;
 
     public Uzytkownik(
             String imie, String nazwisko, String dataUrodzenia, DzialPracownikow przypisanyDzial,
@@ -16,6 +16,7 @@ public class Uzytkownik extends Pracownik {
         this.numerUzytkownika = ++iloscUzytkownikow;
         this.login = login;
         this.haslo = haslo;
+        ustawInicjal();
         mapaUzytkownikow.put(numerUzytkownika, this);
     }
 
@@ -30,9 +31,14 @@ public class Uzytkownik extends Pracownik {
     public String toStringLong() {
         return "<Uzytkownik " + numerUzytkownika + "> " +
                 this.login + " | " +
-                imie + " " + nazwisko + " | " +
+                imie + " " + nazwisko + " " + inicjal + " | " +
                 dataUrodzenia + " | " +
                 "Dzial: " + przypisanyDzial;
+    }
+
+    public void ustawInicjal() {
+        inicjal = "" + super.imie.charAt(0);
+        inicjal += super.nazwisko.charAt(0);
     }
 
     // OVERRIDES
@@ -40,6 +46,24 @@ public class Uzytkownik extends Pracownik {
     public String toString() {
         return "<Uzytkownik " + numerUzytkownika + "> " +
                 this.login;
+    }
+
+    @Override
+    public void zmienNazwe(String noweImie, String noweNazwisko) {
+        super.zmienNazwe(noweImie, noweNazwisko);
+        this.ustawInicjal();
+    }
+
+    @Override
+    public void zmienImie(String noweImie) {
+        super.zmienImie(noweImie);
+        this.ustawInicjal();
+    }
+
+    @Override
+    public void zmienNazwisko(String noweNazwisko) {
+        super.zmienNazwisko(noweNazwisko);
+        this.ustawInicjal();
     }
 
     // GETTERS

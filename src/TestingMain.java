@@ -25,10 +25,15 @@ public class TestingMain {
         // -------------------------------------------------------------------------------------------------------------
         System.out.println(AbstractMessages.divider("TEST BRYGADZISTOW"));
 
+        System.out.print(AbstractMessages.info("Przed zmiana imienia i nazwiska: "));
         Brygadzista brygadzista1 = new Brygadzista("Jan", "Zadanie", "1970-01-01", 1, "jaza", "brygadzista");
         System.out.println(brygadzista1.toStringLong());
 
-        System.out.println(AbstractMessages.info("Pracownicy dzialu 1: ") + dzial1.getPracownicyDzialu());
+        System.out.print(AbstractMessages.info("\nPo zmianie imienia i nazwiska: "));
+        brygadzista1.zmienNazwe("Adam", "Task");
+        System.out.println(brygadzista1.toStringLong());
+
+        System.out.println(AbstractMessages.info("\nPracownicy dzialu 1: ") + dzial1.getPracownicyDzialu());
 
         // -------------------------------------------------------------------------------------------------------------
         System.out.println(AbstractMessages.divider("TEST BRYGAD"));
@@ -37,6 +42,7 @@ public class TestingMain {
         brygada1.dodajPracownika(dzial1.getPracownicyDzialu());
 
         System.out.println(brygada1 + ": " + brygada1.getListaPracownikow());
+        System.out.println(brygadzista1.toStringLong());
 
         // -------------------------------------------------------------------------------------------------------------
         System.out.println(AbstractMessages.divider("TEST ZLECEN"));

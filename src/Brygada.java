@@ -19,6 +19,7 @@ public class Brygada {
     public Brygada(String nazwa, Brygadzista brygadzista) {
         this(nazwa);
         this.brygadzista = brygadzista;
+        this.brygadzista.przypiszDoBrygady(this);
         dodajPracownika(brygadzista);
     }
 
