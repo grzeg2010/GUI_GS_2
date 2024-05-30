@@ -47,6 +47,10 @@ public class Window extends JFrame {
         JButton bZlecenie = new JButton("Zlecenie");
         JButton bPraca = new JButton("Praca");
         JButton bWyloguj = new JButton("Wyloguj");
+        bWyloguj.addActionListener(e -> {
+            new LoginWindow();
+            this.dispose(); // TODO
+        });
 
         //centerPanel.addTab(title, tabBody);
         //int index = tabPane.indexOfTab(title);

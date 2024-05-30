@@ -67,5 +67,6 @@ public class Uzytkownik extends Pracownik {
     }
 
     // GETTERS
+    public static Map<Integer, Uzytkownik> getMapaUzytkownikow() { return mapaUzytkownikow; }
     public int getNumerUzytkownika() { return numerUzytkownika; }
 }
