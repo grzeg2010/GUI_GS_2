@@ -1,12 +1,11 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package Logika;
 
-public class Brygadzista extends Uzytkownik {
-    private static Map<Integer, Brygadzista> mapaBrygadzistow = new HashMap<>();
-    private int numerBrygadzisty;
-    private static int iloscBrygadzistow = 0;
+import java.io.Serializable;
+import java.util.*;
+
+public class Brygadzista extends Uzytkownik implements Serializable {
+    private Dane.BazaDanych db;
+    private final int numerBrygadzisty;
 
     private List<Brygada> przypisaneBrygady;
 
@@ -15,8 +14,11 @@ public class Brygadzista extends Uzytkownik {
             String login, String haslo
     ) {
         super(imie, nazwisko, dataUrodzenia, przypisanyDzial, login, haslo);
-        this.numerBrygadzisty = ++iloscBrygadzistow;
+        db = Dane.BazaDanych.sharedDb;
+        db.increaseIloscBrygadzistow();
+        this.numerBrygadzisty = db.getIloscBrygadzistow();
         this.przypisaneBrygady = new ArrayList<>();
+        db.getMapaBrygadzistow().put(numerBrygadzisty, this);
     }
 
     public Brygadzista(

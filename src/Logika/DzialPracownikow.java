@@ -1,23 +1,28 @@
+package Logika;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class DzialPracownikow {
-    private static final Map<Integer, DzialPracownikow> mapaDzialow = new HashMap<>();
+public class DzialPracownikow implements Serializable {
+    private static final Dane.BazaDanych staticDb = Dane.BazaDanych.sharedDb;
+    private final Dane.BazaDanych db;
     private final int numerDzialu;
-    private static int iloscDzialow = 0;
 
     private final String nazwa;
 
     private Set<Pracownik> pracownicyDzialu; // Set pozwala unikac duplikatow
 
     private DzialPracownikow(String nazwa) {
-        this.numerDzialu = ++iloscDzialow;
+        this.db = Dane.BazaDanych.sharedDb;
+        db.increaseIloscDzialow();
+        this.numerDzialu = db.getIloscDzialow();
         this.nazwa = nazwa;
         pracownicyDzialu = new HashSet<>();
-        mapaDzialow.put(numerDzialu, this);
+        db.getMapaDzialow().put(numerDzialu, this);
     }
 
     public static DzialPracownikow createDzial(String nazwa) {
-        if(mapaDzialow
+        if(staticDb.getMapaDzialow()
                 .values()
                 .stream()
                 .anyMatch(e -> Objects.equals(e.nazwa, nazwa))
@@ -45,7 +50,7 @@ public class DzialPracownikow {
     }
 
     // GETTERS
-    public static Map<Integer, DzialPracownikow> getListaDzialow() { return mapaDzialow; }
+    public static Map<Integer, DzialPracownikow> getListaDzialow() { return staticDb.getMapaDzialow(); }
 
     public Set<Pracownik> getPracownicyDzialu() {
             return pracownicyDzialu;

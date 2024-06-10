@@ -1,7 +1,12 @@
-import java.util.List;
+package Testy;
+
+import Dane.BazaDanych;
+import Logika.*;
 
 public class TestingMain {
     public static void main(String[] args) {
+        Dane.BazaDanych db = new BazaDanych();
+
         System.out.println(AbstractMessages.divider("TEST DZIALOW"));
         DzialPracownikow dzial1 = DzialPracownikow.createDzial("DzialTestowy");
         DzialPracownikow dzial2 = DzialPracownikow.createDzial("DzialDrugi");
@@ -14,6 +19,7 @@ public class TestingMain {
         System.out.println(AbstractMessages.divider("TEST PRACOWNIKOW/UZYTKOWNIKOW"));
 
         Pracownik pracownik1 = new Pracownik("Adrian", "Z", "1990-05-14", 1);
+        Pracownik pracownik2 = new Pracownik("Adrianna", "R", "1996-06-25", 2);
         Uzytkownik uzytkownik1 = new Uzytkownik("Grzegorz", "S", "1999-08-16", 1, "grzeg", "haslo");
 
         System.out.println(uzytkownik1.toStringLong());
@@ -63,5 +69,7 @@ public class TestingMain {
 
         System.out.println(praca1.toStringLong());
         System.out.println(zlecenie1.toStringLong());
+
+        db.safeDbToFile();
     }
 }

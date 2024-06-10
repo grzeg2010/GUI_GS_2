@@ -1,10 +1,10 @@
-import java.util.HashMap;
-import java.util.Map;
+package Logika;
 
-public class Praca {
-    private static Map<Integer, Praca> mapaPrac = new HashMap<>();
+import java.io.Serializable;
+
+public class Praca implements Serializable {
+    private final Dane.BazaDanych db;
     private final int numerPracy;
-    private static int iloscPrac = 0;
 
     public enum Rodzaj {Ogolna, Montaz, Demontaz, Wymiana}
     private final Rodzaj rodzajPracy;
@@ -13,12 +13,14 @@ public class Praca {
     private final String opis;
 
     public Praca(Praca.Rodzaj rodzaj, int czasPracy, String opis) {
-        this.numerPracy = ++iloscPrac;
+        this.db = Dane.BazaDanych.sharedDb;
+        db.increaseIloscPrac();
+        this.numerPracy = db.getIloscPrac();
         this.rodzajPracy = rodzaj;
         this.czasPracy = czasPracy;
         this.czyZrealizowane = false;
         this.opis = opis;
-        mapaPrac.put(numerPracy, this);
+        db.getMapaPrac().put(numerPracy, this);
     }
 
     // METHODS

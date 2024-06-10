@@ -1,3 +1,5 @@
+package Grafika;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -40,12 +42,12 @@ public class Window extends JFrame {
         leftPanel.setLayout(new GridLayout(8, 1));
 
         JButton bDzialPracownikow = new JButton("Dział pracowników");
-        JButton bPracownik = new JButton("Pracownik");
+        JButton bPracownik = new JButton("Logika.Pracownik");
         JButton bUzytkownik = new JButton("Użytkownik");
-        JButton bBrygadzista = new JButton("Brygadzista");
-        JButton bBrygada = new JButton("Brygada");
-        JButton bZlecenie = new JButton("Zlecenie");
-        JButton bPraca = new JButton("Praca");
+        JButton bBrygadzista = new JButton("Logika.Brygadzista");
+        JButton bBrygada = new JButton("Logika.Brygada");
+        JButton bZlecenie = new JButton("Logika.Zlecenie");
+        JButton bPraca = new JButton("Logika.Praca");
         JButton bWyloguj = new JButton("Wyloguj");
         bWyloguj.addActionListener(e -> {
             new LoginWindow();

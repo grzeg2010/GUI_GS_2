@@ -1,10 +1,10 @@
-import java.util.HashMap;
+package Logika;
+
 import java.util.Map;
 
 public class Uzytkownik extends Pracownik {
-    private static Map<Integer, Uzytkownik> mapaUzytkownikow = new HashMap<>();
+    private final Dane.BazaDanych db;
     private final int numerUzytkownika;
-    private static int iloscUzytkownikow;
 
     protected String login, haslo, inicjal;
 
@@ -13,11 +13,13 @@ public class Uzytkownik extends Pracownik {
             String login, String haslo
     ) {
         super(imie, nazwisko, dataUrodzenia, przypisanyDzial);
-        this.numerUzytkownika = ++iloscUzytkownikow;
+        db = Dane.BazaDanych.sharedDb;
+        db.increaseIloscUzytkownikow();
+        this.numerUzytkownika = db.getIloscUzytkownikow();
         this.login = login;
         this.haslo = haslo;
         ustawInicjal();
-        mapaUzytkownikow.put(numerUzytkownika, this);
+        db.getMapaUzytkownikow().put(numerUzytkownika, this);
     }
 
     public Uzytkownik(
@@ -67,6 +69,6 @@ public class Uzytkownik extends Pracownik {
     }
 
     // GETTERS
-    public static Map<Integer, Uzytkownik> getMapaUzytkownikow() { return mapaUzytkownikow; }
+    public Map<Integer, Uzytkownik> getMapaUzytkownikow() { return db.getMapaUzytkownikow(); }
     public int getNumerUzytkownika() { return numerUzytkownika; }
 }

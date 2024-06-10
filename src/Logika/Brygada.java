@@ -1,19 +1,23 @@
+package Logika;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class Brygada {
-    private static Map<Integer, Brygada> mapaBrygad = new HashMap<>();
+public class Brygada implements Serializable {
+    private final Dane.BazaDanych db;
     private final int numerBrygady;
-    private static int iloscBrygad = 0;
 
     private String nazwa;
     private Brygadzista brygadzista;
     private List<Pracownik> listaPracownikow;
 
     public Brygada(String nazwa) {
-        this.numerBrygady = ++iloscBrygad;
+        db = Dane.BazaDanych.sharedDb;
+        db.increaseIloscBrygad();
+        this.numerBrygady = db.getIloscBrygad();
         this.nazwa = nazwa;
         this.listaPracownikow = new ArrayList<>();
-        mapaBrygad.put(numerBrygady, this);
+        db.getMapaBrygad().put(numerBrygady, this);
     }
 
     public Brygada(String nazwa, Brygadzista brygadzista) {
@@ -32,8 +36,6 @@ public class Brygada {
         this(nazwa, brygadzista);
         dodajPracownika(listaPracownikow);
     }
-
-
 
     // METHODS
     public void dodajPracownika(Pracownik nowyPracownik) {
@@ -68,9 +70,9 @@ public class Brygada {
     // OVERRIDES
     @Override
     public String toString() {
-        return "<Brygada " + numerBrygady + "> " + nazwa;
+        return "<Brygada " + this.numerBrygady + "> " + this.nazwa;
     }
 
     // GETTERS
-    public List<Pracownik> getListaPracownikow() { return listaPracownikow; }
+    public List<Pracownik> getListaPracownikow() { return this.listaPracownikow; }
 }

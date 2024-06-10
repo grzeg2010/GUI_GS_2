@@ -1,13 +1,13 @@
+package Logika;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Zlecenie {
-    private static Map<Integer, Zlecenie> mapaZlecen = new HashMap<>();
+public class Zlecenie implements Serializable {
+    private final Dane.BazaDanych db;
     private final int numerZlecenia;
-    private static int iloscZlecen = 0;
 
     private List<Praca> listaPrac;
     private Brygada brygada;
@@ -17,7 +17,9 @@ public class Zlecenie {
     private LocalDateTime dataRealizacji, dataZakonczenia;
 
     public Zlecenie(Brygada brygada, boolean czyPlanowane) {
-        this.numerZlecenia = ++iloscZlecen;
+        this.db = Dane.BazaDanych.sharedDb;
+        db.increaseIloscZlecen();
+        this.numerZlecenia = db.getIloscZlecen();
         this.listaPrac = new ArrayList<>();
         this.brygada = brygada;
 
@@ -27,7 +29,7 @@ public class Zlecenie {
             this.stanZlecenia = Stan.Nieplanowane;
 
         this.dataUtworzenia = LocalDateTime.now();
-        mapaZlecen.put(numerZlecenia, this);
+        db.getMapaZlecen().put(numerZlecenia, this);
     }
 
     // METHODS
@@ -47,6 +49,6 @@ public class Zlecenie {
     // OVERRIDES
     @Override
     public String toString() {
-        return "<Zlecenie " + numerZlecenia + "> wykonywane przez: " + brygada;
+        return "<Logika.Zlecenie " + numerZlecenia + "> wykonywane przez: " + brygada;
     }
 }
