@@ -13,6 +13,7 @@ public class Window extends JFrame {
         this.setSize(1280, 720);
         this.getContentPane().setLayout(new BorderLayout());
         this.drawLayout();
+        this.setTitle("Baza pracowników");
         this.setVisible(true);
     }
 

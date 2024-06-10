@@ -1,8 +1,8 @@
 package Logika;
 
-import java.util.Map;
+import java.io.Serializable;
 
-public class Uzytkownik extends Pracownik {
+public class Uzytkownik extends Pracownik implements Serializable {
     private final Dane.BazaDanych db;
     private final int numerUzytkownika;
 
@@ -69,6 +69,9 @@ public class Uzytkownik extends Pracownik {
     }
 
     // GETTERS
-    public Map<Integer, Uzytkownik> getMapaUzytkownikow() { return db.getMapaUzytkownikow(); }
+    public String getHaslo() { return haslo; }
+    public String getLogin() { return login; }
     public int getNumerUzytkownika() { return numerUzytkownika; }
+
+
 }

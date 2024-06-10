@@ -1,17 +1,12 @@
-import Dane.BazaDanych;
-import Grafika.LoginWindow;
-import Logika.DzialPracownikow;
-import Logika.Uzytkownik;
-
 import javax.swing.*;
 
 public class S29792 {
     public static void main(String[] args) {
-        Dane.BazaDanych db = new BazaDanych();
+        Dane.BazaDanych db = new Dane.BazaDanych();
+        db.readDbFromFile();
 
-        DzialPracownikow dzial1 = DzialPracownikow.createDzial("Dzial1");
-        Uzytkownik user1 = new Uzytkownik("Grzegorz", "Sni", "2001-01-01", 1, "grzeg", "abc");
+        System.out.println(db.getMapaUzytkownikow().get(1));
 
-        JFrame loginWindow = new LoginWindow();
+        JFrame loginWindow = new Grafika.LoginWindow();
     }
 }
