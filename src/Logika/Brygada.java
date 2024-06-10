@@ -75,4 +75,6 @@ public class Brygada implements Serializable {
 
     // GETTERS
     public List<Pracownik> getListaPracownikow() { return this.listaPracownikow; }
+    public String getNazwa() { return this.nazwa; }
+    public int getNumer() { return this.numerBrygady; }
 }

@@ -1,7 +1,6 @@
 package Dane;
 
 import java.io.*;
-import java.util.Map;
 
 public class FileOperations {
     public static void safeToFile(Dane.BazaDanych db) {

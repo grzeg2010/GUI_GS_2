@@ -5,24 +5,26 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Pracownik implements Serializable {
-    private final Dane.BazaDanych db;
-    private final int numerPracownika;
+    private static final Dane.BazaDanych db = Dane.BazaDanych.sharedDb;
+    private int numerPracownika;
 
     protected String imie, nazwisko;
     protected LocalDate dataUrodzenia;
     protected DzialPracownikow przypisanyDzial;
 
     public Pracownik(String imie, String nazwisko, String dataUrodzenia, DzialPracownikow przypisanyDzial) {
-        this.db = Dane.BazaDanych.sharedDb;
-        db.increaseIloscPracownikow();
-        this.numerPracownika = db.getIloscPracownikow();
         this.imie = imie;
         this.nazwisko = nazwisko;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.dataUrodzenia = LocalDate.parse(dataUrodzenia, formatter);
         this.przypisanyDzial = przypisanyDzial;
         this.przypisanyDzial.dodajPracownika(this);
-        db.getMapaPracownikow().put(numerPracownika, this);
+
+        if(this.getClass() == Pracownik.class) {
+            db.increaseIloscPracownikow();
+            this.numerPracownika = db.getIloscPracownikow();
+            db.getMapaPracownikow().put(numerPracownika, this);
+        }
     }
 
     public Pracownik(String imie, String nazwisko, String dataUrodzenia, int numerPrzypisanegoDzialu) {
@@ -53,7 +55,6 @@ public class Pracownik implements Serializable {
     }
 
     // GETTERS
-    public int getIloscPracownikow() {
-        return db.getIloscPracownikow();
-    }
+    public String getNazwa() { return imie + nazwisko; }
+    public int getNumer() { return numerPracownika; }
 }

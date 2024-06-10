@@ -3,8 +3,8 @@ package Logika;
 import java.io.Serializable;
 
 public class Uzytkownik extends Pracownik implements Serializable {
-    private final Dane.BazaDanych db;
-    private final int numerUzytkownika;
+    private static final Dane.BazaDanych db = Dane.BazaDanych.sharedDb;
+    private int numerUzytkownika;
 
     protected String login, haslo, inicjal;
 
@@ -13,13 +13,15 @@ public class Uzytkownik extends Pracownik implements Serializable {
             String login, String haslo
     ) {
         super(imie, nazwisko, dataUrodzenia, przypisanyDzial);
-        db = Dane.BazaDanych.sharedDb;
-        db.increaseIloscUzytkownikow();
-        this.numerUzytkownika = db.getIloscUzytkownikow();
         this.login = login;
         this.haslo = haslo;
         ustawInicjal();
-        db.getMapaUzytkownikow().put(numerUzytkownika, this);
+
+        if(this.getClass() == Uzytkownik.class) {
+            db.increaseIloscUzytkownikow();
+            this.numerUzytkownika = db.getIloscUzytkownikow();
+            db.getMapaUzytkownikow().put(numerUzytkownika, this);
+        }
     }
 
     public Uzytkownik(
@@ -70,8 +72,7 @@ public class Uzytkownik extends Pracownik implements Serializable {
 
     // GETTERS
     public String getHaslo() { return haslo; }
+    public String getInicjal() { return inicjal; }
     public String getLogin() { return login; }
-    public int getNumerUzytkownika() { return numerUzytkownika; }
-
-
+    public int getNumer() { return numerUzytkownika; }
 }

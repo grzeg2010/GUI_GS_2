@@ -32,7 +32,12 @@ public class Praca implements Serializable {
     }
 
     // OVERRIDES
+    @Override
     public String toString() {
         return "<Praca " + numerPracy + "> " + "\"" + opis + "\"";
     }
+
+    // GETTERS
+    public String getNazwa() { return opis; }
+    public int getNumer() { return numerPracy; }
 }

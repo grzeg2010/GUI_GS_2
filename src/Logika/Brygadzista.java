@@ -32,7 +32,7 @@ public class Brygadzista extends Uzytkownik implements Serializable {
     public void przypiszDoBrygady(Brygada nowaBrygada) { this.przypisaneBrygady.add(nowaBrygada); }
 
     public String toStringLong() {
-        return "<Brygadzista " + numerBrygadzisty + "><Uzytkownik " + super.getNumerUzytkownika() + "> " +
+        return "<Brygadzista " + numerBrygadzisty + "><Uzytkownik " + super.getNumer() + "> " +
                 login + " | " +
                 imie + " " + nazwisko + " " + inicjal + " | " +
                 dataUrodzenia +
@@ -46,4 +46,7 @@ public class Brygadzista extends Uzytkownik implements Serializable {
         return "<Brygadzista " + numerBrygadzisty + "> " +
                 login;
     }
+
+    // GETTERS
+    public int getNumer() { return numerBrygadzisty; }
 }

@@ -51,9 +51,11 @@ public class DzialPracownikow implements Serializable {
 
     // GETTERS
     public static Map<Integer, DzialPracownikow> getListaDzialow() { return staticDb.getMapaDzialow(); }
-
+    public String getNazwa() { return nazwa; }
+    public int getNumer() { return numerDzialu; }
     public Set<Pracownik> getPracownicyDzialu() {
             return pracownicyDzialu;
     }
+
 }
 
