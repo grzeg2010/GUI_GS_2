@@ -74,5 +74,6 @@ public class Uzytkownik extends Pracownik implements Serializable {
     public String getHaslo() { return haslo; }
     public String getInicjal() { return inicjal; }
     public String getLogin() { return login; }
+    public String getNazwa() { return imie + " " + nazwisko + " \"" + login + "\""; }
     public int getNumer() { return numerUzytkownika; }
 }
