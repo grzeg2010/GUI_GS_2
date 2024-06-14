@@ -52,6 +52,8 @@ public class Zlecenie implements Serializable {
         return "<Logika.Zlecenie " + numerZlecenia + "> wykonywane przez: " + brygada;
     }
 
+    // SETTERS
+
     // GETTERS
     public String getNazwa() { return listaPrac.toString(); }
     public int getNumer() { return numerZlecenia; }

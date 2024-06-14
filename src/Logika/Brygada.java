@@ -73,7 +73,12 @@ public class Brygada implements Serializable {
         return "<Brygada " + this.numerBrygady + "> " + this.nazwa;
     }
 
+    // SETTERS
+    public void setNazwa(String nowaNazwa) { this.nazwa = nowaNazwa; }
+    public void setBrygadzista(Brygadzista nowyBrygadzista) { this.brygadzista = nowyBrygadzista; }
+
     // GETTERS
+    public Brygadzista getBrygadzista() { return this.brygadzista; }
     public List<Pracownik> getListaPracownikow() { return this.listaPracownikow; }
     public String getNazwa() { return this.nazwa; }
     public int getNumer() { return this.numerBrygady; }

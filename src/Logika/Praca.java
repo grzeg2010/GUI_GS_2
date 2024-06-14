@@ -7,10 +7,10 @@ public class Praca implements Serializable {
     private final int numerPracy;
 
     public enum Rodzaj {Ogolna, Montaz, Demontaz, Wymiana}
-    private final Rodzaj rodzajPracy;
-    private final int czasPracy;
+    private Rodzaj rodzajPracy;
+    private int czasPracy;
     private boolean czyZrealizowane;
-    private final String opis;
+    private String opis;
 
     public Praca(Praca.Rodzaj rodzaj, int czasPracy, String opis) {
         this.db = Dane.BazaDanych.sharedDb;
@@ -37,7 +37,16 @@ public class Praca implements Serializable {
         return "<Praca " + numerPracy + "> " + "\"" + opis + "\"";
     }
 
+    // SETTERS
+    public void setOpis(String nowyOpis) { this.opis = nowyOpis; }
+    public void setRodzajPracy(Rodzaj nowyRodzaj) { this.rodzajPracy = nowyRodzaj; }
+    public void setCzasPracy(int nowyCzas) { this.czasPracy = nowyCzas; }
+    public void setCzyZrealizowane(boolean nowyStatus) { this.czyZrealizowane = nowyStatus; }
+
     // GETTERS
     public String getNazwa() { return opis; }
     public int getNumer() { return numerPracy; }
+    public Rodzaj getRodzaj() { return rodzajPracy; }
+    public boolean getStatus() { return czyZrealizowane; }
+    public int getCzas() { return czasPracy; }
 }

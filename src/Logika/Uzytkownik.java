@@ -70,6 +70,10 @@ public class Uzytkownik extends Pracownik implements Serializable {
         this.ustawInicjal();
     }
 
+    // SETTERS
+    public void setLogin(String nowyLogin) { this.login = nowyLogin; }
+    public void setHaslo(String noweHaslo) { this.haslo = noweHaslo; }
+
     // GETTERS
     public String getHaslo() { return haslo; }
     public String getInicjal() { return inicjal; }

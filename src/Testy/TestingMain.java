@@ -33,6 +33,7 @@ public class TestingMain {
 
         System.out.print(AbstractMessages.info("Przed zmiana imienia i nazwiska: "));
         Brygadzista brygadzista1 = new Brygadzista("Jan", "Zadanie", "1970-01-01", 1, "jaza", "brygadzista");
+        Brygadzista brygadzista2 = new Brygadzista("Adam", "Admin", "1970-01-01", 1, "aa", "haslo");
         System.out.println(brygadzista1.toStringLong());
 
         System.out.print(AbstractMessages.info("\nPo zmianie imienia i nazwiska: "));

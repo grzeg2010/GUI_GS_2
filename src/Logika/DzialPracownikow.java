@@ -8,7 +8,7 @@ public class DzialPracownikow implements Serializable {
     private final Dane.BazaDanych db;
     private final int numerDzialu;
 
-    private final String nazwa;
+    private String nazwa;
 
     private Set<Pracownik> pracownicyDzialu; // Set pozwala unikac duplikatow
 
@@ -47,6 +47,11 @@ public class DzialPracownikow implements Serializable {
     @Override
     public String toString() {
         return "<Dzial " + this.numerDzialu + "> " + this.nazwa;
+    }
+
+    // SETTERS
+    public void setNazwa(String nowaNazwa) {
+        this.nazwa = nowaNazwa;
     }
 
     // GETTERS

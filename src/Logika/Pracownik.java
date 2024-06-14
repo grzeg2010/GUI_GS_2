@@ -54,7 +54,17 @@ public class Pracownik implements Serializable {
                 this.imie + " " + this.nazwisko;
     }
 
+    // SETTERS
+    public void setImie(String noweImie) { this.imie = noweImie; }
+    public void setNazwisko(String noweNazwisko) { this.nazwisko = noweNazwisko; }
+    public void setDataUrodzenia(LocalDate nowaData) { this.dataUrodzenia = nowaData; }
+    public void setDzial(DzialPracownikow nowyDzial) { this.przypisanyDzial = nowyDzial; }
+
     // GETTERS
     public String getNazwa() { return imie + nazwisko; }
     public int getNumer() { return numerPracownika; }
+    public String getImie() { return imie; }
+    public String getNazwisko() { return nazwisko; }
+    public LocalDate getDataUrodzenia() { return dataUrodzenia; }
+    public DzialPracownikow getDzial() { return przypisanyDzial; }
 }
