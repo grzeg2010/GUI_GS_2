@@ -6,9 +6,11 @@ import Logika.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.text.NumberFormat;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 public class EditDialogBody extends JDialog {
+    protected static LocalDate sharedDateVar;
     private int numerObiektu;
 
     private JPanel rNumer = new JPanel();
@@ -62,7 +64,6 @@ public class EditDialogBody extends JDialog {
         this.add(rNumer);
     }
 
-    // BRYGADA
     public EditDialogBody(Map<Integer, ?> mapa, JTable currentTable, boolean isNewObject) {
         numerObiektu = -1;
         if(currentTable.getSelectedRow() != -1)
@@ -102,6 +103,7 @@ public class EditDialogBody extends JDialog {
                         Brygada nowaBrygada = new Brygada(fNazwa.getText(), (Brygadzista) cBrygadzista.getSelectedItem());
                         ((DefaultTableModel) currentTable.getModel()).addRow(new String[]{String.valueOf(nowaBrygada.getNumer()), nowaBrygada.getNazwa()});
                     }
+                    Window.db.safeDbToFile();
                     this.dispose();
                 });
             }
@@ -142,12 +144,20 @@ public class EditDialogBody extends JDialog {
                 rDataUrodzenia.add(lDataUrodzenia);
                 if(!isNewObject)
                     fDataUrodzenia.setText(String.valueOf(currentObject.getDataUrodzenia()));
-                fDataUrodzenia.setColumns(20);
+                fDataUrodzenia.setColumns(12);
+                fDataUrodzenia.setEditable(false);
+                JButton bKalendarz = new JButton("Kalendarz");
+                bKalendarz.addActionListener(e -> {
+                    new DateEditor(currentObject);
+                });
                 rDataUrodzenia.add(fDataUrodzenia);
+                rDataUrodzenia.add(bKalendarz);
                 this.add(rDataUrodzenia);
 
-                DzialPracownikow[] listaDzialow = new DzialPracownikow[BazaDanych.sharedDb.getIloscDzialow()];
-                BazaDanych.sharedDb.getMapaDzialow().forEach(((integer, dzialPracownikow) -> listaDzialow[integer - 1] = dzialPracownikow));
+                DzialPracownikow[] listaDzialow = new DzialPracownikow[BazaDanych.sharedDb.getMapaDzialow().size()];
+                System.out.println(BazaDanych.sharedDb.getMapaDzialow());
+                BazaDanych.sharedDb.getMapaDzialow().forEach((integer, dzialPracownikow) -> listaDzialow[integer - 1] = dzialPracownikow );
+
                 cDzial = new JComboBox<>(listaDzialow);
                 if(!isNewObject)
                     cDzial.setSelectedItem(currentObject.getDzial());
@@ -177,6 +187,7 @@ public class EditDialogBody extends JDialog {
 
                         ((DefaultTableModel) currentTable.getModel()).addRow(new String[]{String.valueOf(nowyObiekt.getNumer()), nowyObiekt.getNazwa()});
                     }
+                    Window.db.safeDbToFile();
                     this.dispose();
                 });
             }
@@ -197,9 +208,10 @@ public class EditDialogBody extends JDialog {
                         currentObject.setNazwa(fNazwa.getText());
                         currentTable.getModel().setValueAt(currentObject.getNazwa(), currentTable.getSelectedRow(), 1);
                     } else {
-                        DzialPracownikow nowyObiekt = DzialPracownikow.createDzial(currentObject.getNazwa());
+                        DzialPracownikow nowyObiekt = DzialPracownikow.createDzial(fNazwa.getText());
                         ((DefaultTableModel) currentTable.getModel()).addRow(new String[]{String.valueOf(nowyObiekt.getNumer()), nowyObiekt.getNazwa()});
                     }
+                    Window.db.safeDbToFile();
                     this.dispose();
                 });
             }
@@ -263,9 +275,10 @@ public class EditDialogBody extends JDialog {
                         currentObject.setRodzajPracy((Praca.Rodzaj) cRodzaj.getSelectedItem());
                         currentTable.getModel().setValueAt(currentObject.getNazwa(), currentTable.getSelectedRow(), 1);
                     } else {
-                        Praca nowyObiekt = new Praca((Praca.Rodzaj) cRodzaj.getSelectedItem(), Integer.parseInt(fCzas.getText()), currentObject.getNazwa());
+                        Praca nowyObiekt = new Praca((Praca.Rodzaj) cRodzaj.getSelectedItem(), Integer.parseInt(fCzas.getText()), aOpis.getText());
                         ((DefaultTableModel) currentTable.getModel()).addRow(new String[]{String.valueOf(nowyObiekt.getNumer()), nowyObiekt.getNazwa()});
                     }
+                    Window.db.safeDbToFile();
                     this.dispose();
                 });
             }
@@ -293,7 +306,13 @@ public class EditDialogBody extends JDialog {
                 if(!isNewObject)
                     fDataUrodzenia.setText(String.valueOf(currentObject.getDataUrodzenia()));
                 fDataUrodzenia.setColumns(20);
+                fDataUrodzenia.setEditable(false);
+                JButton bKalendarz = new JButton("Kalendarz");
+                bKalendarz.addActionListener(e -> {
+                    new DateEditor(currentObject);
+                });
                 rDataUrodzenia.add(fDataUrodzenia);
+                rDataUrodzenia.add(bKalendarz);
                 this.add(rDataUrodzenia);
 
                 DzialPracownikow[] listaDzialow = new DzialPracownikow[BazaDanych.sharedDb.getIloscDzialow()];
@@ -322,6 +341,7 @@ public class EditDialogBody extends JDialog {
 
                         ((DefaultTableModel) currentTable.getModel()).addRow(new String[]{String.valueOf(nowyObiekt.getNumer()), nowyObiekt.getNazwa()});
                     }
+                    Window.db.safeDbToFile();
                     this.dispose();
                 });
             }
@@ -363,7 +383,13 @@ public class EditDialogBody extends JDialog {
                 if(!isNewObject)
                     fDataUrodzenia.setText(String.valueOf(currentObject.getDataUrodzenia()));
                 fDataUrodzenia.setColumns(20);
+                fDataUrodzenia.setEditable(false);
+                JButton bKalendarz = new JButton("Kalendarz");
+                bKalendarz.addActionListener(e -> {
+                    new DateEditor(currentObject);
+                });
                 rDataUrodzenia.add(fDataUrodzenia);
+                rDataUrodzenia.add(bKalendarz);
                 this.add(rDataUrodzenia);
 
                 DzialPracownikow[] listaDzialow = new DzialPracownikow[BazaDanych.sharedDb.getIloscDzialow()];
@@ -397,6 +423,7 @@ public class EditDialogBody extends JDialog {
 
                         ((DefaultTableModel) currentTable.getModel()).addRow(new String[]{String.valueOf(nowyObiekt.getNumer()), nowyObiekt.getNazwa()});
                     }
+                    Window.db.safeDbToFile();
                     this.dispose();
                 });
             }
@@ -405,6 +432,23 @@ public class EditDialogBody extends JDialog {
 
                 this.addRepeatingElements(numerObiektu, isNewObject);
 
+                JPanel rDataRealizacji = new JPanel();
+                JLabel lDataRealizacji = new JLabel("Data realizacji");
+                JTextField fDataRealizacji = new JTextField();
+
+                rDataRealizacji.add(lDataRealizacji);
+                if(!isNewObject)
+                    fDataRealizacji.setText(String.valueOf(currentObject.getDataRealizacji()));
+                fDataRealizacji.setColumns(20);
+                fDataRealizacji.setEditable(false);
+                JButton bKalendarz = new JButton("Kalendarz");
+                bKalendarz.addActionListener(e -> {
+                    new DateEditor(currentObject);
+                });
+                rDataRealizacji.add(fDataRealizacji);
+                rDataRealizacji.add(bKalendarz);
+                this.add(rDataRealizacji);
+
                 bZapisz.addActionListener(e -> {
                     if(!isNewObject) {
                         currentTable.getModel().setValueAt(currentObject.getNazwa(), currentTable.getSelectedRow(), 1);
@@ -412,12 +456,47 @@ public class EditDialogBody extends JDialog {
                         DzialPracownikow nowyObiekt = DzialPracownikow.createDzial(currentObject.getNazwa());
                         ((DefaultTableModel) currentTable.getModel()).addRow(new String[]{String.valueOf(nowyObiekt.getNumer()), nowyObiekt.getNazwa()});
                     }
+                    Window.db.safeDbToFile();
                     this.dispose();
                 });
             }
         }
 
         this.add(bZapisz);
+        this.setVisible(true);
+    }
+
+    public EditDialogBody(DzialPracownikow dzial) {
+        this.setModal(true);
+        this.setTitle("Pracownicy działu");
+        this.setSize(300, 400);
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+
+        Set<Pracownik> setPracownikow = dzial.getListaPracownikow();
+
+        Object[] listaPracownikow = setPracownikow.toArray();
+
+        JList<Object> podgladPracownikow = new JList<>(listaPracownikow);
+
+        this.add(podgladPracownikow);
+
+        this.setVisible(true);
+    }
+
+    public EditDialogBody(Zlecenie zlecenie) {
+        this.setModal(true);
+        this.setTitle("Lista prac: ");
+        this.setSize(300, 400);
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+
+        List<Praca> setPrac = zlecenie.getListaPrac();
+
+        Object[] listaPrac = setPrac.toArray();
+
+        JList<Object> podgladPrac = new JList<>(listaPrac);
+
+        this.add(podgladPrac);
+
         this.setVisible(true);
     }
 }

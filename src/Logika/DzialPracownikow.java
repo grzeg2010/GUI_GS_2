@@ -61,6 +61,9 @@ public class DzialPracownikow implements Serializable {
     public Set<Pracownik> getPracownicyDzialu() {
             return pracownicyDzialu;
     }
+    public Set<Pracownik> getListaPracownikow() {
+        return pracownicyDzialu;
+    }
 
 }
 

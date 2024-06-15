@@ -1,6 +1,7 @@
 package Logika;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,13 @@ public class Zlecenie implements Serializable {
                 "\n\tLista prac: " + listaPrac;
     }
 
+    public void zakonczZlecenie() {
+        listaPrac.forEach(Praca::zakonczPrace);
+
+        dataZakonczenia = LocalDateTime.now();
+        stanZlecenia = Stan.Zakonczone;
+    }
+
     // OVERRIDES
     @Override
     public String toString() {
@@ -53,8 +61,11 @@ public class Zlecenie implements Serializable {
     }
 
     // SETTERS
+    public void setDataRealizacji(LocalDateTime nowaDataRealizacji) { this.dataRealizacji = nowaDataRealizacji; }
 
     // GETTERS
     public String getNazwa() { return listaPrac.toString(); }
     public int getNumer() { return numerZlecenia; }
+    public List<Praca> getListaPrac() { return listaPrac; }
+    public LocalDateTime getDataRealizacji() { return dataRealizacji; }
 }

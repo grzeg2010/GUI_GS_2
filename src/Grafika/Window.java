@@ -1,7 +1,9 @@
 package Grafika;
 
 import Logika.Brygadzista;
+import Logika.DzialPracownikow;
 import Logika.Uzytkownik;
+import Logika.Zlecenie;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Window extends JFrame {
-    private static final Dane.BazaDanych db = Dane.BazaDanych.sharedDb;
+    protected static final Dane.BazaDanych db = Dane.BazaDanych.sharedDb;
     private final Uzytkownik currentUser;
     static JTabbedPane centerPanel = new JTabbedPane();
 
@@ -85,6 +87,7 @@ public class Window extends JFrame {
                 oknoZmianyHasla.dispose();
             });
 
+            db.safeDbToFile();
             oknoZmianyHasla.setVisible(true);
         });
 
@@ -96,8 +99,15 @@ public class Window extends JFrame {
             Window.this.dispose();
         });
 
-        leftPanel.add(bDzialPracownikow); leftPanel.add(bPracownik); leftPanel.add(bUzytkownik); leftPanel.add(bBrygadzista);
-        leftPanel.add(bBrygada); leftPanel.add(bZlecenie); leftPanel.add(bPraca); leftPanel.add(bZmienHaslo); leftPanel.add(bWyloguj);
+        leftPanel.add(bBrygada);
+        leftPanel.add(bBrygadzista);
+        leftPanel.add(bDzialPracownikow);
+        leftPanel.add(bPraca);
+        leftPanel.add(bPracownik);
+        leftPanel.add(bUzytkownik);
+        leftPanel.add(bZlecenie);
+        leftPanel.add(bZmienHaslo);
+        leftPanel.add(bWyloguj);
 
         this.getContentPane().add(centerPanel, BorderLayout.CENTER);
         this.getContentPane().add(leftPanel, BorderLayout.WEST);
@@ -119,7 +129,7 @@ public class Window extends JFrame {
         bRemoveObject.setBackground(Color.pink);
         JLabel lUser = new JLabel("Witaj " + currentUser.getInicjal());
         JPanel buttonRow = new JPanel();
-        buttonRow.add(bAddObject); buttonRow.add(bEditObject); buttonRow.add(bRemoveObject); buttonRow.add(lUser);
+        buttonRow.add(bAddObject); buttonRow.add(bEditObject); buttonRow.add(bRemoveObject);
 
         Map<String, JTable> mapaTabel = new HashMap<>();
         JTable table;
@@ -142,6 +152,17 @@ public class Window extends JFrame {
                 case "Dział pracowników" -> {
                     table = Tabs.utworzTabele(db.getMapaDzialow());
                     mapaTabel.put("Dzial", table);
+                    JButton bPokazPracownikow = new JButton("Pokaż pracowników");
+                    bPokazPracownikow.setBackground(Color.lightGray);
+                    bPokazPracownikow.addActionListener(e1 -> {
+                        DzialPracownikow dzial = db.getMapaDzialow().get(
+                                Integer.parseInt(mapaTabel.get("Dzial").getValueAt(mapaTabel.get("Dzial").getSelectedRow(), 0).toString())
+                        );
+
+                        new EditDialogBody(dzial);
+                    });
+
+                    buttonRow.add(bPokazPracownikow);
                 }
                 case "Praca" -> {
                     table = Tabs.utworzTabele(db.getMapaPrac());
@@ -158,6 +179,31 @@ public class Window extends JFrame {
                 case "Zlecenie" -> {
                     table = Tabs.utworzTabele(db.getMapaZlecen());
                     mapaTabel.put("Zlecenie", table);
+                    JButton bPokazPrace = new JButton("Pokaż prace");
+                    bPokazPrace.setBackground(Color.lightGray);
+
+                    bPokazPrace.addActionListener(e1 -> {
+                        Zlecenie zlecenie = db.getMapaZlecen().get(
+                                Integer.parseInt(mapaTabel.get("Zlecenie").getValueAt(mapaTabel.get("Zlecenie").getSelectedRow(), 0).toString())
+                        );
+
+                        new EditDialogBody(zlecenie);
+                    });
+
+                    JButton bZakonczZlecenie = new JButton("Zakończ zlecenie");
+                    bZakonczZlecenie.setBackground(Color.green);
+                    bZakonczZlecenie.addActionListener(e1 -> {
+                        Zlecenie zlecenie = db.getMapaZlecen().get(
+                                Integer.parseInt(mapaTabel.get("Zlecenie").getValueAt(mapaTabel.get("Zlecenie").getSelectedRow(), 0).toString())
+                        );
+
+                        zlecenie.zakonczZlecenie();
+                        mapaTabel.get("Zlecenie").getModel().setValueAt(zlecenie.getNazwa() ,mapaTabel.get("Zlecenie").getSelectedRow(), 1);
+                        db.safeDbToFile();
+                    });
+
+                    buttonRow.add(bPokazPrace);
+                    buttonRow.add(bZakonczZlecenie);
                 }
                 default -> throw new RuntimeException();
             }
@@ -176,6 +222,8 @@ public class Window extends JFrame {
                     default -> throw new RuntimeException();
                 }
             });
+
+            buttonRow.add(lUser);
 
             bEditObject.addActionListener(new ActionListener() { // TODO
                 @Override
@@ -239,8 +287,8 @@ public class Window extends JFrame {
                         case "Pracownik" -> {
                             currentTable = mapaTabel.get("Pracownik");
                             if (currentTable.getSelectedRow() >= 0) {
-                            db.getMapaPracownikow().remove(getIndexOfSelectedObject(currentTable));
-                            db.setIloscPracownikow(db.getIloscPracownikow() - 1);
+                                db.getMapaPracownikow().remove(getIndexOfSelectedObject(currentTable));
+                                db.setIloscPracownikow(db.getIloscPracownikow() - 1);
                             }
                         }
                         case "Użytkownik" -> {
@@ -268,6 +316,8 @@ public class Window extends JFrame {
                     // System.out.println(currentTable.getSelectedRow());
                     if (currentTable != null && currentTable.getSelectedRow() >= 0)
                         ((DefaultTableModel) currentTable.getModel()).removeRow(currentTable.getSelectedRow());
+
+                    db.safeDbToFile();
                 }
             });
 

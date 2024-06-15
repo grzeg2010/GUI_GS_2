@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class Tabs {
     public static JTable utworzTabele(Map<Integer, ?> mapa) {
-
         String[] columnNames = {
                 "ID", "Nazwa"
         };
@@ -18,8 +17,6 @@ public class Tabs {
         TableModel tableModel = new DefaultTableModel(columnNames, 0);
 
         mapa.forEach(((integer, obiekt) -> {
-            // integer = integer-1;
-
             switch (obiekt.getClass().toString()) {
                 case "class Logika.Brygada" -> {
                     Brygada castedObject = (Brygada) obiekt;

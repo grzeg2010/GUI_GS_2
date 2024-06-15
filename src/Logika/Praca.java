@@ -31,6 +31,11 @@ public class Praca implements Serializable {
                 "\n\tCzy zostalo zrealizowane: " + (czyZrealizowane?"tak":"nie");
     }
 
+    public void zakonczPrace() {
+        czyZrealizowane = true;
+        opis += "[UKONCZONE]";
+    }
+
     // OVERRIDES
     @Override
     public String toString() {
